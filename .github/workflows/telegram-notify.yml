@@ -20,7 +20,13 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
           GITHUB_EVENT: ${{ github.event_name }}
         run: |
-          MESSAGE="🔔 GitHub Alert! \nRepository: $GITHUB_REPO\nEvent: $GITHUB_EVENT\nBranch: $GITHUB_REF\nBy: $GITHUB_ACTOR"
+          MESSAGE="📢 <b>GitHub Notification</b>\n\n🚀 <b>Repository:</b> <code>$GITHUB_REPOSITORY</code>\
+          \n📌 <b>Event:</b> <code>$GITHUB_EVENT_NAME</code>\
+          \n🌿 <b>Branch:</b> <code>$GITHUB_REF_NAME</code>\
+          \n👤 <b>User:</b> <code>$GITHUB_ACTOR</code>"
+
           curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
                -d "chat_id=$TELEGRAM_CHAT_ID" \
+               -d "parse_mode=HTML" \
                -d "text=$MESSAGE"
+
