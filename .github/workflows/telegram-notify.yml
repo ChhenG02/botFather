@@ -17,7 +17,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           COMMIT_MESSAGE: "${{ github.event.head_commit.message }}"
         run: |
-          MESSAGE="📢 <b>GitHub Notification</b>%0A%0A🚀 <b>Repository:</b> <code>${{ github.repository }}</code>%0A📌 <b>Event:</b> <code>${{ github.event_name }}</code>%0A🌿 <b>Branch:</b> <code>${{ github.ref_name }}</code>%0A👤 <b>User:</b> <code>${{ github.actor }}</code>%0A📝 <b>Commit Message:</b> <code>${{ env.COMMIT_MESSAGE }}</code>"
+          MESSAGE="📢 <b>GitHub Notification</b>%0A%0A🚀 <b>Repository:</b> <code>${{ github.repository }}</code>%0A📌 <b>Event:</b> <code>${{ github.event_name }}</code>%0A🌿 <b>Branch:</b> <code>${{ github.ref_name }}</code>%0A👤 <b>User:</b> <code>${{ github.actor }}</code>%0A📝 <b>Message:</b> <code>${{ env.COMMIT_MESSAGE }}</code>"
 
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
                -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
