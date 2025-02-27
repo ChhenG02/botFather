@@ -1,0 +1,26 @@
+name: Telegram Notifications
+
+on:
+  push:
+    branches:
+      - '**'  # Notify on push to any branch
+  pull_request:
+    types: [opened, closed]  # Notify on PR open and merge
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram Notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_EVENT: ${{ github.event_name }}
+        run: |
+          MESSAGE="🔔 GitHub Alert! \nRepository: $GITHUB_REPO\nEvent: $GITHUB_EVENT\nBranch: $GITHUB_REF\nBy: $GITHUB_ACTOR"
+          curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+               -d "chat_id=$TELEGRAM_CHAT_ID" \
+               -d "text=$MESSAGE"
